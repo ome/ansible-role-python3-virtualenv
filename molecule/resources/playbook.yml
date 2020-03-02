@@ -1,0 +1,16 @@
+---
+- name: Converge
+  hosts: all
+  roles:
+    - role: ansible-role-python3-virtualenv
+
+  tasks:
+    - name: test ansible-role-python3-virtualenv
+      become: true
+      pip:
+        name:
+          - omego
+          - scc
+        state: present
+        virtualenv: /opt/test/python3-virtualenv
+        virtualenv_command: /usr/local/bin/ome-python3-virtualenv.sh

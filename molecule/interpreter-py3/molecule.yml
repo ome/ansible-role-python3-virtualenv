@@ -1,0 +1,30 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+lint:
+  name: yamllint
+platforms:
+  - name: interpreter-py3-c7
+    image: centos:7
+  - name: interpreter-py3-u1807
+    image: ubuntu:18.04
+provisioner:
+  name: ansible
+  playbooks:
+    converge: ../resources/playbook.yml
+  lint:
+    name: ansible-lint
+  inventory:
+    host_vars:
+      all:
+        ansible_python_interpreter: python3
+
+scenario:
+  name: interpreter-py3
+verifier:
+  name: testinfra
+  directory: ../resources/tests/
+  lint:
+    name: flake8

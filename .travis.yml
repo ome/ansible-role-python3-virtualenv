@@ -1,0 +1,19 @@
+---
+sudo: required
+language: python
+
+services:
+  - docker
+
+install:
+  - pip install "ome-ansible-molecule<0.5"
+
+script:
+  - molecule test -s $SCENARIO
+
+env:
+  - SCENARIO=interpreter-py2
+  - SCENARIO=interpreter-py3
+
+notifications:
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/
