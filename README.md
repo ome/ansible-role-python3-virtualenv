@@ -9,7 +9,7 @@ Install Python3 virtualenv dependencies and a wrapper script for the Ansible pip
 
 There are multiple ways of creating Python virtualenvs including virtualenv, python3 -mvenv, but these may take different parameters.
 In some situations, particularly if `ansible_python_interpreter` is set, the Ansible pip modules passes unrecognised parameters.
-This role installs a wrapper script `/usr/local/bin/ome-python3-virtualenv.sh` should work in all cases.
+This role installs a wrapper script `/usr/local/bin/ome-python3-virtualenv` should work in all cases.
 
 
 Author Information

@@ -13,4 +13,4 @@
           - scc
         state: present
         virtualenv: /opt/test/python3-virtualenv
-        virtualenv_command: /usr/local/bin/ome-python3-virtualenv.sh
+        virtualenv_command: /usr/local/bin/ome-python3-virtualenv
