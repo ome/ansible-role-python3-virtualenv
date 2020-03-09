@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  role_name: python_virtualenv
+  role_name: python3_virtualenv
   author: ome-devel@lists.openmicroscopy.org.uk
   description: Install Python3 virtualenv dependencies
   company: Open Microscopy Environment
