@@ -8,8 +8,12 @@ lint:
 platforms:
   - name: interpreter-py2-c7
     image: centos:7
-  - name: interpreter-py2-u1807
+    groups:
+      - py2
+  - name: interpreter-py2-u1804
     image: ubuntu:18.04
+    groups:
+      - py2
 provisioner:
   name: ansible
   playbooks:
@@ -17,8 +21,8 @@ provisioner:
   lint:
     name: ansible-lint
   inventory:
-    host_vars:
-      all:
+    group_vars:
+      py2:
         ansible_python_interpreter: python2
 
 scenario:
