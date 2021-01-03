@@ -1,6 +1,6 @@
 ---
 
-- name: python3 venv | install python3
+- name: python3 venv | install python3 (3.6 Ubuntu 18)
   become: true
   apt:
     name:
@@ -10,6 +10,23 @@
       - python3-pip
       - python3-setuptools
     state: present
+  when:
+    - ansible_os_family | lower == 'debian'
+    - ansible_distribution_major_version == 18
+
+- name: python3 venv | install python3 (3.8 Ubuntu 20)
+  become: true
+  apt:
+    name:
+      - python3.8
+      - python3.8-distutils
+      - python3.8-venv
+      - python3-pip
+      - python3-setuptools
+    state: present
+  when:
+    - ansible_os_family | lower == 'debian'
+    - ansible_distribution_major_version == 20      
 
 # https://docs.ansible.com/ansible/latest/modules/pip_module.html
 # The setuptools package must be installed for both the Ansible Python
