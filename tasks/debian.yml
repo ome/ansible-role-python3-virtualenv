@@ -12,7 +12,7 @@
     state: present
   when:
     - ansible_os_family | lower == 'debian'
-    - ansible_distribution_major_version == 18
+    - ansible_distribution_major_version == '18'
 
 - name: python3 venv | install python3 (3.8 Ubuntu 20)
   become: true
@@ -26,7 +26,7 @@
     state: present
   when:
     - ansible_os_family | lower == 'debian'
-    - ansible_distribution_major_version == 20      
+    - ansible_distribution_major_version == '20'      
 
 # https://docs.ansible.com/ansible/latest/modules/pip_module.html
 # The setuptools package must be installed for both the Ansible Python
