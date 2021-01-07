@@ -16,6 +16,10 @@ platforms:
     image: ubuntu:18.04
     groups:
       - py3
+  - name: interpreter-py3-u2004
+    image: ubuntu:20.04
+    groups:
+      - py3
 
 provisioner:
   name: ansible
