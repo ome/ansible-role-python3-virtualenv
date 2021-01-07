@@ -30,8 +30,22 @@ jobs:
         scenario: ${{fromJson(needs.list-scenarios.outputs.matrix)}}
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
+      # Ansible 2.6 has problems when the remote python version is 3
+      - name: Install ome-ansible-molecule
+        run: |
+          if [ $SCENARIO = interpreter-py2 ]; then
+            python -mpip install 'ome-ansible-molecule==0.4.*'
+          else
+            python -mpip install ansible==2.8.3 molecule==2.22 docker==4.4.1
+          fi
+        env:
+          SCENARIO: ${{ matrix.scenario }}
       - uses: ome/action-ome-ansible-molecule@main
         with:
+          manage-virtualenv: "false"
           scenario: ${{ matrix.scenario }}
 
 # notifications:
