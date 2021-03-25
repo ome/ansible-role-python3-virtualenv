@@ -1,9 +1,8 @@
 Python3 Virtualenv
 ==================
 
-
-[![Build Status](https://travis-ci.org/ome/ansible-role-python3-virtualenv.svg)](https://travis-ci.org/ome/ansible-role-python3-virtualenv)
-[![Ansible Role TODO](https://img.shields.io/ansible/role/TODO.svg)](https://galaxy.ansible.com/ome/python3_-_virtualenv/)
+[![Actions Status](https://github.com/ome/ansible-role-python3-virtualenv/workflows/Molecule/badge.svg)](https://github.com/ome/ansible-role-python3-virtualenv/actions)
+[![Ansible Role TODO](https://img.shields.io/ansible/role/47139.svg)](https://galaxy.ansible.com/ome/python3_virtualenv/)
 
 Install Python3 virtualenv dependencies and a wrapper script for the Ansible pip module.
 
