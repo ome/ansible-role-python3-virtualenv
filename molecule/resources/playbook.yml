@@ -2,7 +2,7 @@
 - name: Converge
   hosts: all
   roles:
-    - role: ansible-role-python3-virtualenv
+    - role: ome.python3_virtualenv
 
   tasks:
     - name: test | upgrade pip
