@@ -3,8 +3,10 @@ dependency:
   name: galaxy
 driver:
   name: docker
-lint:
-  name: yamllint
+lint: |
+    yamllint .
+    ansible-lint
+    flake8
 platforms:
   # Using the Python 3 for ansible on CentOS 7 requires other changes
   # so ignore for now
@@ -12,10 +14,6 @@ platforms:
   #   image: centos:7
   #   groups:
   #     - py3
-  - name: interpreter-py3-u1804
-    image: ubuntu:18.04
-    groups:
-      - py3
   - name: interpreter-py3-u2004
     image: ubuntu:20.04
     groups:
@@ -37,5 +35,3 @@ scenario:
 verifier:
   name: testinfra
   directory: ../resources/tests/
-  lint:
-    name: flake8

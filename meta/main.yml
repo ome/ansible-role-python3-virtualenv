@@ -10,9 +10,9 @@ galaxy_info:
     - name: EL
       versions:
         - 7
+  namespace: ome
     - name: Ubuntu
       versions:
-        - bionic
         - focal
   galaxy_tags:
     - system
