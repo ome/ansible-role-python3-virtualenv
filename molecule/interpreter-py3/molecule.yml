@@ -14,8 +14,8 @@ platforms:
   #   image: centos:7
   #   groups:
   #     - py3
-  - name: interpreter-py3-u2004
-    image: ubuntu:20.04
+  - name: interpreter-py3-u2204
+    image: ubuntu:22.04
     groups:
       - py3
 

@@ -2,7 +2,7 @@
 
 - name: python3 venv | install packages
   become: true
-  yum:
+  ansible.builtin.dnf:
     name: python3
     state: present
 
@@ -11,7 +11,7 @@
 # interpreter and for the version of Python specified by this option.
 - name: python3 venv | install python2-setuptools for python2 interpreter
   become: true
-  yum:
+  ansible.builtin.dnf:
     name: python-setuptools
     state: present
   when: (ansible_python_version is version('3.0.0', '<'))
