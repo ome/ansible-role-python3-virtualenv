@@ -11,6 +11,8 @@ In some situations, particularly if `ansible_python_interpreter` is set, the Ans
 This role installs a wrapper script `/usr/local/bin/ome-python3-virtualenv` should work in all cases.
 
 
+The compatibility with Python 2 has been removed in version 0.2.0.
+
 Author Information
 ------------------
 
