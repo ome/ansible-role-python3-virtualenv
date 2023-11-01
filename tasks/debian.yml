@@ -11,14 +11,3 @@
       - python3-pip
       - python3-setuptools
     state: present
-
-
-# https://docs.ansible.com/ansible/latest/modules/pip_module.html
-# The setuptools package must be installed for both the Ansible Python
-# interpreter and for the version of Python specified by this option.
-- name: python3 venv | install python2-setuptools for python2 interpreter
-  become: true
-  apt:
-    name: python-setuptools
-    state: present
-  when: (ansible_python_version is version('3.0.0', '<'))
