@@ -1,13 +1,39 @@
 ---
 
+- name: install software-properties-common
+  apt:
+    name: software-properties-common
+    state: present
+    update_cache: yes
+
+- name: Add deadsnakes PPA
+  apt_repository:
+    repo: ppa:deadsnakes/ppa
+    state: present
+
+- name: apt cache update
+  apt:
+      update_cache: yes
+
 - name: python3 venv | install python3
   become: true
   apt:
     update_cache: true
     name:
-      - python3
-      - python3-distutils
-      - python3-venv
-      - python3-pip
-      - python3-setuptools
+      - python3.12
+      - python3.12-venv
+      #- python3.12-pip
+      #- python3.12-setuptools
     state: present
+
+- name: Install pip for Python 3.12 using ensurepip
+  command: python3.12 -m ensurepip --upgrade
+  args:
+    creates: "/usr/local/bin/pip3.12"
+
+- name: Install setuptools for Python 3.12
+  ansible.builtin.pip:
+    name:
+      - setuptools
+      - packaging
+    executable: pip3.12
