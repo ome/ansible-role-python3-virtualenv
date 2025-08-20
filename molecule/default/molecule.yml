@@ -26,7 +26,7 @@ provisioner:
   inventory:
     group_vars:
       py3:
-        ansible_python_interpreter: python3.12
+        ansible_python_interpreter:  /usr/bin/python3
 
 scenario:
   name: default
