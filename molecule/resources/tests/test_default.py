@@ -7,8 +7,8 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 
 def test_virtualenv(host):
     venv = '/opt/test/python3-virtualenv'
-    host.check_output(venv + '/bin/python --version').startswith('Python 3.')
-    host.check_output(venv + '/bin/pip --version').startswith('Python 3.')
+    host.check_output(venv + '/bin/python --version').startswith('Python 3.12')
+    host.check_output(venv + '/bin/pip --version').startswith('Python 3.12')
     assert host.file(venv + '/bin/python').is_file
     assert host.file(venv + '/bin/python3').is_file
     assert host.file(venv + '/bin/pip').is_file
