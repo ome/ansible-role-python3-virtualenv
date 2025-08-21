@@ -6,9 +6,9 @@
 - include_tasks: debian.yml
   when: ansible_os_family | lower == 'debian'
 
-- name: python3.12 venv | create python virtualenv wrapper
+- name: python venv | create python virtualenv wrapper
   become: true
-  ansible.builtin.copy:
+  ansible.builtin.template:
     dest: /usr/local/bin/ome-python3-virtualenv
-    src: ome-python3-virtualenv.sh
+    src: ome-python3-virtualenv.sh.j2
     mode: 'u=rwx,g=rx,o=rx'

@@ -1,14 +1,14 @@
 ---
 
-- name: python3.12 venv | install packages
+- name: python venv | install packages
   become: true
   ansible.builtin.dnf:
     update_cache: true
     name:
-      - python3.12-devel.x86_64
-      - python3.12
-      - python3.12-pip
-      - python3.12-setuptools
+      - "python{{ python_version }}-devel.x86_64"
+      - "python{{ python_version }}"
+      - "python{{ python_version }}-pip"
+      - "python{{ python_version }}-setuptools"
     state: present
 
 

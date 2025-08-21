@@ -16,4 +16,4 @@ for arg in "$@"; do
         shift
     fi
 done
-python3.12 -mvenv "$@"
+python{{ python_version }} -mvenv "$@"
