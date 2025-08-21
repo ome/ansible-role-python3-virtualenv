@@ -10,6 +10,19 @@ There are multiple ways of creating Python virtualenvs including virtualenv, pyt
 In some situations, particularly if `ansible_python_interpreter` is set, the Ansible pip modules passes unrecognised parameters.
 This role installs a wrapper script `/usr/local/bin/ome-python3-virtualenv` should work in all cases.
 
+Role Variables
+--------------
+python_version: The default Python version value is 3.12, with support also available for Python 3.11.
+
+Example Playbooks
+-----------------
+    
+    - hosts: localhost
+      roles:
+      - role: ome.ansible-role-python3-virtualenv
+        # Uncomment the line below to use Python 3.11. 
+        # python_version: "3:11"
+
 
 Author Information
 ------------------
