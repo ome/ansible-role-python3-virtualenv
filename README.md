@@ -21,7 +21,7 @@ Example Playbooks
       roles:
       - role: ome.ansible-role-python3-virtualenv
         # Uncomment the line below to use Python 3.11. 
-        # python_version: "3:11"
+        # python_version: "3.11"
 
 
 Author Information
