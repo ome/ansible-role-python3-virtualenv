@@ -1,20 +1,9 @@
 ---
-## Check for existing env and if it is a symlink or not
-## If it is there, and  there is no symlink,  it will be moved to a folder which has python version and create symlink
 
-#python_version: "3.12"
-#virtualenv_basedir: ""
-#service_name: ""
 - name: python venv | check if the venv3 dir exists
   stat:
     path: "{{ virtualenv_basedir }}/venv3"
   register: venv_dir
-
-- name: Print a debug message
-  ansible.builtin.debug:
-    msg: "venv exists and is a symlink {{ venv_dir.stat.islnk }}"
-  when: venv_dir.stat.exists and not venv_dir.stat.islnk
-
 
 - name: python venv | register exist venv python version
   become: true
@@ -23,20 +12,10 @@
   when: venv_dir.stat.exists
   changed_when: false
 
-- name: python venv | Display the python  version
-  ansible.builtin.debug:
-      msg: "Version is: {{ server_venv_vers.stdout }}"
-  when: venv_dir.stat.exists
-
-- name: Set a server_venv_version
+- name: python venv | Set a server_venv_version
   ansible.builtin.set_fact:
     server_venv_version: "{{ '.'.join(server_venv_vers.stdout | ansible.builtin.regex_replace ('Python ','')| split('.'))[:3] | string}}"
   when: venv_dir.stat.exists
-
-- name: python venv | Display the python  version
-  ansible.builtin.debug:
-      msg: "Version is:{{ server_venv_version }}"
-  when: venv_dir.stat.exists and python_version == server_venv_version
 
 - name: python venv | copy venv to the folder which its name has the python version
   become: true
@@ -97,8 +76,7 @@
     virtualenv: "{{ virtualenv_basedir }}/venv-{{ python_version }}"
     virtualenv_command: /usr/local/bin/ome-python3-virtualenv
 
-
-- name: python venv | Remove a symbolic link if exist
+- name: python venv | Remove a symbolic link if exist and has different python version
   become: true
   ansible.builtin.file:
     path: "{{ virtualenv_basedir }}/venv3"
