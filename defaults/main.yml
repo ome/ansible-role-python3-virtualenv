@@ -1,1 +1,3 @@
 python_version: "3.12"
+virtualenv_basedir: ""
+service_name: ""
