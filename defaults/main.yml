@@ -1,3 +1,4 @@
 python_version: "3.12"
-virtualenv_basedir: ""
+virtualenv_basedir: "/opt"
 service_name: ""
+env_name: venv3

@@ -1,13 +1,13 @@
 ---
 
-- name: python venv | check if the venv3 dir exists
+- name: python venv | check if the {{ env_name }} dir exists
   stat:
-    path: "{{ virtualenv_basedir }}/venv3"
+    path: "{{ virtualenv_basedir }}/{{ env_name }}"
   register: venv_dir
 
-- name: python venv | register exist venv python version
+- name: python venv | register existing venv python version
   become: true
-  ansible.builtin.command: "{{ virtualenv_basedir }}/venv3/bin/python --version"
+  ansible.builtin.command: "{{ virtualenv_basedir }}/{{ env_name }}/bin/python --version"
   register: server_venv_vers
   when: venv_dir.stat.exists
   changed_when: false
@@ -21,7 +21,7 @@
   become: true
   ansible.builtin.copy:
     remote_src: True
-    src: "{{ virtualenv_basedir }}/venv3/"
+    src: "{{ virtualenv_basedir }}/{{ env_name }}/"
     dest: "{{ virtualenv_basedir }}/venv-{{ server_venv_version }}/"
   when: venv_dir.stat.exists and not venv_dir.stat.islnk
 
@@ -39,7 +39,7 @@
 - name: python venv | Remove folder if it is not symlink
   become: true
   ansible.builtin.file:
-    path: "{{ virtualenv_basedir }}/venv3"
+    path: "{{ virtualenv_basedir }}/{{ env_name }}"
     state: absent
   when: venv_dir.stat.exists and not venv_dir.stat.islnk
 
@@ -47,7 +47,7 @@
   become: true
   ansible.builtin.file:
     src: "{{ virtualenv_basedir }}/venv-{{ server_venv_version }}"
-    dest: "{{ virtualenv_basedir }}/venv3"
+    dest: "{{ virtualenv_basedir }}/{{ env_name }}"
     state: link
   when: venv_dir.stat.exists and not venv_dir.stat.islnk
 
@@ -79,7 +79,7 @@
 - name: python venv | Remove a symbolic link if exist and has different python version
   become: true
   ansible.builtin.file:
-    path: "{{ virtualenv_basedir }}/venv3"
+    path: "{{ virtualenv_basedir }}/{{ env_name }}"
     state: absent
   when:
     - venv_dir.stat.exists and venv_dir.stat.islnk
@@ -89,5 +89,5 @@
   become: true
   ansible.builtin.file:
     src: "{{ virtualenv_basedir }}/venv-{{ python_version }}"
-    dest: "{{ virtualenv_basedir }}/venv3"
+    dest: "{{ virtualenv_basedir }}/{{ env_name }}"
     state: link
