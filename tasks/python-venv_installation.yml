@@ -27,7 +27,7 @@
 
 - name: python venv | Display Warning Message
   ansible.builtin.debug:
-      msg: "The venv is upgraded to use a symlin, the service ({{ service_name }}) will be stopped before the changes and restarted afterwards."
+      msg: "The venv is upgraded to use a symlink, the service ({{ service_name }}) will be stopped before the changes and restarted afterwards."
   when:
     - venv_dir.stat.exists
     - not venv_dir.stat.islnk
