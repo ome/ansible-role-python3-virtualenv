@@ -14,7 +14,7 @@
 
 - name: python venv | Set a server_venv_version
   ansible.builtin.set_fact:
-    server_venv_version: "{{ '.'.join(server_venv_vers.stdout | ansible.builtin.regex_replace ('Python ','')| split('.'))[:3] | string}}"
+    server_venv_version: "{{ server_venv_vers.stdout | ansible.builtin.regex_replace ('Python ''')| regex_search('^\\d+\\.\\d+') | string}}"
   when: venv_dir.stat.exists
 
 - name: python venv | copy venv to the folder which its name has the python version
@@ -25,6 +25,15 @@
     dest: "{{ virtualenv_basedir }}/venv-{{ server_venv_version }}/"
   when: venv_dir.stat.exists and not venv_dir.stat.islnk
 
+- name: python venv | Display Warning Message
+  ansible.builtin.debug:
+      msg: "The venv is upgraded to use a symlin, the service ({{ service_name }}) will be stopped before the changes and restarted afterwards."
+  when:
+    - venv_dir.stat.exists
+    - not venv_dir.stat.islnk
+    - python_version == server_venv_version
+    - service_name  | length > 0
+
 - name: python venv | stop the server
   become: true
   ansible.builtin.service:
@@ -33,7 +42,7 @@
   when:
     - venv_dir.stat.exists
     - not venv_dir.stat.islnk
-    - python_version in server_venv_vers.stdout
+    - python_version == server_venv_version
     - service_name  | length > 0
 
 - name: python venv | Remove folder if it is not symlink
@@ -59,6 +68,7 @@
   when:
     - venv_dir.stat.exists
     - not venv_dir.stat.islnk
+    - python_version == server_venv_version
     - service_name  | length > 0
 
 - name: python venv | create python virtualenv wrapper
