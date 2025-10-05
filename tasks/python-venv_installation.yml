@@ -8,21 +8,21 @@
 - name: python venv | register existing venv python version
   become: true
   ansible.builtin.command: "{{ virtualenv_basedir }}/{{ env_name }}/bin/python --version"
-  register: server_venv_vers
+  register: host_venv_vers
   when: venv_dir.stat.exists
   changed_when: false
 
-- name: python venv | Set a server_venv_version
+- name: python venv | Set a host_venv_version
   ansible.builtin.set_fact:
-    server_venv_version: "{{ server_venv_vers.stdout | ansible.builtin.regex_replace ('Python ''')| regex_search('^\\d+\\.\\d+') | string}}"
+    host_venv_version: "{{ host_venv_vers.stdout | ansible.builtin.regex_replace ('Python ''')| regex_search('^\\d+\\.\\d+') | string}}"
   when: venv_dir.stat.exists
 
-- name: python venv | copy venv to the folder which its name has the python version
+- name: python venv | Copy venv to a folder whose name includes the python version
   become: true
   ansible.builtin.copy:
     remote_src: True
     src: "{{ virtualenv_basedir }}/{{ env_name }}/"
-    dest: "{{ virtualenv_basedir }}/venv-{{ server_venv_version }}/"
+    dest: "{{ virtualenv_basedir }}/venv-{{ host_venv_version }}/"
   when: venv_dir.stat.exists and not venv_dir.stat.islnk
 
 - name: python venv | Display Warning Message
@@ -31,7 +31,7 @@
   when:
     - venv_dir.stat.exists
     - not venv_dir.stat.islnk
-    - python_version == server_venv_version
+    - python_version == host_venv_version
     - service_name  | length > 0
 
 - name: python venv | stop the server
@@ -42,7 +42,7 @@
   when:
     - venv_dir.stat.exists
     - not venv_dir.stat.islnk
-    - python_version == server_venv_version
+    - python_version == host_venv_version
     - service_name  | length > 0
 
 - name: python venv | Remove folder if it is not symlink
@@ -50,12 +50,13 @@
   ansible.builtin.file:
     path: "{{ virtualenv_basedir }}/{{ env_name }}"
     state: absent
+  no_log: true
   when: venv_dir.stat.exists and not venv_dir.stat.islnk
 
 - name: python venv | create symlink if venv exists and is not symlink
   become: true
   ansible.builtin.file:
-    src: "{{ virtualenv_basedir }}/venv-{{ server_venv_version }}"
+    src: "{{ virtualenv_basedir }}/venv-{{ host_venv_version }}"
     dest: "{{ virtualenv_basedir }}/{{ env_name }}"
     state: link
   when: venv_dir.stat.exists and not venv_dir.stat.islnk
@@ -68,7 +69,7 @@
   when:
     - venv_dir.stat.exists
     - not venv_dir.stat.islnk
-    - python_version == server_venv_version
+    - python_version == host_venv_version
     - service_name  | length > 0
 
 - name: python venv | create python virtualenv wrapper
@@ -93,7 +94,7 @@
     state: absent
   when:
     - venv_dir.stat.exists and venv_dir.stat.islnk
-    - python_version not in server_venv_vers.stdout
+    - python_version not in host_venv_vers.stdout
 
 - name: python venv | create symlink for the new python
   become: true
