@@ -13,15 +13,29 @@ This role installs a wrapper script `/usr/local/bin/ome-python3-virtualenv` shou
 Role Variables
 --------------
 python_version: The default Python version value is 3.12, with support also available for Python 3.11.
+virtualenv_basedir: Base directory where the virtual environment is located
+service_name: service name, e.g. omero-server
+env_name: The virtual environment name, the default value is venv3
 
-Example Playbooks
+Example Playbooks 
 -----------------
-    
+    # Example for use during OMERO.server installation or upgrade
     - hosts: localhost
       roles:
       - role: ome.ansible-role-python3-virtualenv
         # Uncomment the line below to use Python 3.11. 
         # python_version: "3.11"
+        virtualenv_basedir: /opt/omero/server
+        service_name: omero-server
+
+    #  Example for use during OMERO.web installation or upgrade        
+    - hosts: localhost
+      roles:
+      - role: ome.ansible-role-python3-virtualenv
+        # Uncomment the line below to use Python 3.11. 
+        # python_version: "3.11"
+        virtualenv_basedir: /opt/omero/web
+        service_name: omero-web
 
 
 Author Information
