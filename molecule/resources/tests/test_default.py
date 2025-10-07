@@ -13,6 +13,7 @@ def test_virtualenv(host):
     assert host.file(venv + '/bin/python3').is_file
     assert host.file(venv + '/bin/pip').is_file
     assert host.file(venv + '/bin/pip3').is_file
+    assert host.file(venv + '/venv3').is_symlink
     packages = host.check_output(venv + '/bin/pip freeze')
     assert 'omego==' in packages
     assert 'scc==' in packages
