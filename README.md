@@ -19,7 +19,7 @@ env_name: The virtual environment name, the default value is venv3
 
 Example Playbooks 
 -----------------
-    # Example for use during OMERO.server installation or upgrade
+    # Example to use during an OMERO.server installation or upgrade
     - hosts: localhost
       roles:
       - role: ome.ansible-role-python3-virtualenv
@@ -28,7 +28,7 @@ Example Playbooks
         virtualenv_basedir: /opt/omero/server
         service_name: omero-server
 
-    #  Example for use during OMERO.web installation or upgrade        
+    #  Example to use during an OMERO.web installation or upgrade        
     - hosts: localhost
       roles:
       - role: ome.ansible-role-python3-virtualenv
