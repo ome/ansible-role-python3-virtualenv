@@ -1,6 +1,6 @@
 # The Python version, the role supports 3.11 and 3.12
 python_version: "3.12"
-#The base location of the Virtual environment
+# The base location of the Virtual environment
 virtualenv_basedir: "/opt"
 # service name, e.g. omero-server
 service_name: ""
