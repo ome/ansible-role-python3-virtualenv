@@ -25,26 +25,6 @@
     dest: "{{ virtualenv_basedir }}/venv-{{ host_venv_version }}/"
   when: venv_dir.stat.exists and not venv_dir.stat.islnk
 
-- name: python venv | Display Warning Message
-  ansible.builtin.debug:
-      msg: "The venv is upgraded to use a symlink, the service ({{ service_name }}) will be stopped before the changes and restarted afterwards."
-  when:
-    - venv_dir.stat.exists
-    - not venv_dir.stat.islnk
-    - python_version == host_venv_version
-    - service_name  | length > 0
-
-- name: python venv | stop the service
-  become: true
-  ansible.builtin.service:
-    name: "{{ service_name }}"
-    state: stopped
-  when:
-    - venv_dir.stat.exists
-    - not venv_dir.stat.islnk
-    - python_version == host_venv_version
-    - service_name  | length > 0
-
 - name: python venv | Remove folder if it is not symlink
   become: true
   ansible.builtin.file:
@@ -60,17 +40,6 @@
     dest: "{{ virtualenv_basedir }}/{{ env_name }}"
     state: link
   when: venv_dir.stat.exists and not venv_dir.stat.islnk
-
-- name: python venv | start the service
-  become: true
-  service:
-    name: "{{ service_name }}"
-    state: started
-  when:
-    - venv_dir.stat.exists
-    - not venv_dir.stat.islnk
-    - python_version == host_venv_version
-    - service_name  | length > 0
 
 - name: python venv | create python virtualenv wrapper
   become: true

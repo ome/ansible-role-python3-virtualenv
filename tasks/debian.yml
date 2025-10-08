@@ -5,6 +5,8 @@
     name: software-properties-common
     state: present
     update_cache: yes
+    # update only if the last update is older than one day
+    cache_valid_time: 86400
 
 - name: Add deadsnakes PPA
   ansible.builtin.apt_repository:

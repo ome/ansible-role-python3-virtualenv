@@ -10,11 +10,11 @@ There are multiple ways of creating Python virtualenvs including virtualenv, pyt
 In some situations, particularly if `ansible_python_interpreter` is set, the Ansible pip modules passes unrecognised parameters.
 This role installs a wrapper script `/usr/local/bin/ome-python3-virtualenv` should work in all cases.
 
-Role Variables
---------------
+The role first creates a new virtual environment, then creates or updates a symlink so that the specified env_name points to venv-python_version.
+Let me know if you'd like a shorter or more technical phrasing.
+\q--------------
 python_version: The default Python version value is 3.12, with support also available for Python 3.11.
 virtualenv_basedir: Base directory where the virtual environment is located
-service_name: service name, e.g. omero-server
 env_name: The virtual environment name, the default value is venv3
 
 Example Playbooks 
@@ -26,7 +26,6 @@ Example Playbooks
         # Uncomment the line below to use Python 3.11. 
         # python_version: "3.11"
         virtualenv_basedir: /opt/omero/server
-        service_name: omero-server
 
     #  Example to use during an OMERO.web installation or upgrade        
     - hosts: localhost
@@ -35,8 +34,6 @@ Example Playbooks
         # Uncomment the line below to use Python 3.11. 
         # python_version: "3.11"
         virtualenv_basedir: /opt/omero/web
-        service_name: omero-web
-
 
 Author Information
 ------------------
