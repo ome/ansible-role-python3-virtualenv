@@ -12,7 +12,7 @@ This role installs a wrapper script `/usr/local/bin/ome-python3-virtualenv` shou
 
 The role first creates a new virtual environment, then creates or updates a symlink so that the specified env_name points to venv-python_version.
 Let me know if you'd like a shorter or more technical phrasing.
-\q--------------
+
 python_version: The default Python version value is 3.12, with support also available for Python 3.11.
 virtualenv_basedir: Base directory where the virtual environment is located
 env_name: The virtual environment name, the default value is venv3
