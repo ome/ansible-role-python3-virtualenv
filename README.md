@@ -10,7 +10,7 @@ There are multiple ways of creating Python virtualenvs including virtualenv, pyt
 In some situations, particularly if `ansible_python_interpreter` is set, the Ansible pip modules passes unrecognised parameters.
 This role installs a wrapper script `/usr/local/bin/ome-python3-virtualenv` should work in all cases.
 
-The role first creates a new virtual environment, then creates or updates a symlink so that the specified env_name points to venv-python_version.
+The role first creates a new virtual environment, then creates or updates a symlink so that the specified `env_name` points to `venv-python_version`.
 
 - `python_version`: The default Python version value is 3.12, with support also available for Python 3.11.
 - `virtualenv_basedir`: Base directory where the virtual environment is located
