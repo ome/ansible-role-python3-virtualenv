@@ -16,23 +16,14 @@ The role first creates a new virtual environment, then creates or updates a syml
 - `virtualenv_basedir`: Base directory where the virtual environment is located
 - `env_name`: The virtual environment name, the default value is venv3
 
-Example Playbooks 
+Example Playbook 
 -----------------
-    # Example to use during an OMERO.server installation or upgrade
     - hosts: localhost
       roles:
       - role: ome.ansible-role-python3-virtualenv
         # Uncomment the line below to use Python 3.11. 
         # python_version: "3.11"
-        virtualenv_basedir: /opt/omero/server
-
-    #  Example to use during an OMERO.web installation or upgrade        
-    - hosts: localhost
-      roles:
-      - role: ome.ansible-role-python3-virtualenv
-        # Uncomment the line below to use Python 3.11. 
-        # python_version: "3.11"
-        virtualenv_basedir: /opt/omero/web
+        virtualenv_basedir: /path/to/virtualenv/basedir     
 
 Author Information
 ------------------
