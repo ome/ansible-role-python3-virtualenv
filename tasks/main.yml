@@ -4,16 +4,16 @@
      msg: "The role does not support version {{python_version }}. Supported versions are {{ supported_versions | join(', ') }}"
   when: python_version not in supported_versions
 
-- include_tasks: redhat.yml
+- ansible.builtin.include_tasks: redhat.yml
   when:
     - python_version in supported_versions
     - ansible_os_family | lower == 'redhat'
 
-- include_tasks: debian.yml
+- ansible.builtin.include_tasks: debian.yml
   when:
     - python_version in supported_versions
     - ansible_os_family | lower == 'debian'
 
-- import_tasks: python-venv_installation.yml
+- ansible.builtin.include_tasks: python-venv_installation.yml
   when: python_version in supported_versions
 
