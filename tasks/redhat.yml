@@ -2,8 +2,7 @@
 
 - name: python venv | install packages
   become: true
-  ansible.builtin.dnf:
-    update_cache: true
+  ansible.builtin.dnf:    
     name:
       - "python{{ python_version }}-devel.x86_64"
       - "python{{ python_version }}"
