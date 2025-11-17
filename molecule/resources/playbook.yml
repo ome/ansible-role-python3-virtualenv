@@ -3,12 +3,13 @@
   hosts: all
   roles:
     - role: ome.python3_virtualenv
+      virtualenv_basedir: /opt/test/python3-virtualenv
 
   tasks:
     - name: test | upgrade pip
       become: true
       pip:
-        name: "pip>=21"
+        name: pip
         state: present
         virtualenv: /opt/test/python3-virtualenv
         virtualenv_command: /usr/local/bin/ome-python3-virtualenv

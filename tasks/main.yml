@@ -1,14 +1,19 @@
 ---
 
-- import_tasks: redhat.yml
-  when: ansible_os_family | lower == 'redhat'
+- ansible.builtin.debug:
+     msg: "The role does not support version {{python_version }}. Supported versions are {{ supported_versions | join(', ') }}"
+  when: python_version not in supported_versions
 
-- import_tasks: debian.yml
-  when: ansible_os_family | lower == 'debian'
+- ansible.builtin.include_tasks: redhat.yml
+  when:
+    - python_version in supported_versions
+    - ansible_os_family | lower == 'redhat'
 
-- name: python3 venv | create python virtualenv wrapper
-  become: true
-  copy:
-    dest: /usr/local/bin/ome-python3-virtualenv
-    src: ome-python3-virtualenv.sh
-    mode: 'u=rwx,g=rx,o=rx'
+- ansible.builtin.include_tasks: debian.yml
+  when:
+    - python_version in supported_versions
+    - ansible_os_family | lower == 'debian'
+
+- ansible.builtin.include_tasks: python-venv_installation.yml
+  when: python_version in supported_versions
+

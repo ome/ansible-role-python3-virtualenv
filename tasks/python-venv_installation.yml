@@ -1,0 +1,73 @@
+---
+
+- name: python venv | check if the {{ env_name }} dir exists
+  stat:
+    path: "{{ virtualenv_basedir }}/{{ env_name }}"
+  register: venv_dir
+
+- name: python venv | register existing venv python version
+  become: true
+  ansible.builtin.command: "{{ virtualenv_basedir }}/{{ env_name }}/bin/python --version"
+  register: host_venv_vers
+  when: venv_dir.stat.exists
+  changed_when: false
+
+- name: python venv | Set a host_venv_version
+  ansible.builtin.set_fact:
+    host_venv_version: "{{ host_venv_vers.stdout | ansible.builtin.regex_replace ('Python ''')| regex_search('^\\d+\\.\\d+') | string}}"
+  when: venv_dir.stat.exists
+
+- name: python venv | Copy venv to a folder whose name includes the python version
+  become: true
+  ansible.builtin.copy:
+    remote_src: True
+    src: "{{ virtualenv_basedir }}/{{ env_name }}/"
+    dest: "{{ virtualenv_basedir }}/venv-{{ host_venv_version }}/"
+  when: venv_dir.stat.exists and not venv_dir.stat.islnk
+
+- name: python venv | Remove folder if it is not symlink
+  become: true
+  ansible.builtin.file:
+    path: "{{ virtualenv_basedir }}/{{ env_name }}"
+    state: absent
+  no_log: true
+  when: venv_dir.stat.exists and not venv_dir.stat.islnk
+
+- name: python venv | create symlink if venv exists and is not symlink
+  become: true
+  ansible.builtin.file:
+    src: "{{ virtualenv_basedir }}/venv-{{ host_venv_version }}"
+    dest: "{{ virtualenv_basedir }}/{{ env_name }}"
+    state: link
+  when: venv_dir.stat.exists and not venv_dir.stat.islnk
+
+- name: python venv | create python virtualenv wrapper
+  become: true
+  ansible.builtin.template:
+    dest: /usr/local/bin/ome-python3-virtualenv
+    src: ome-python3-virtualenv.sh.j2
+    mode: 'u=rwx,g=rx,o=rx'
+
+- name: python venv | setup virtualenv3
+  become: true
+  ansible.builtin.pip:
+    name: "pip>=21"
+    state: present
+    virtualenv: "{{ virtualenv_basedir }}/venv-{{ python_version }}"
+    virtualenv_command: /usr/local/bin/ome-python3-virtualenv
+
+- name: python venv | Remove a symbolic link if exist and has different python version
+  become: true
+  ansible.builtin.file:
+    path: "{{ virtualenv_basedir }}/{{ env_name }}"
+    state: absent
+  when:
+    - venv_dir.stat.exists and venv_dir.stat.islnk
+    - python_version not in host_venv_vers.stdout
+
+- name: python venv | create symlink for the new python
+  become: true
+  ansible.builtin.file:
+    src: "{{ virtualenv_basedir }}/venv-{{ python_version }}"
+    dest: "{{ virtualenv_basedir }}/{{ env_name }}"
+    state: link
