@@ -91,6 +91,3 @@
   command: "{{ virtualenv_basedir }}/{{ env_name }}/bin/python{{ python_version }} -m pip install --upgrade 'certifi>=2026.10.19'"
   changed_when: false
   when: "(python_version == '3.12' and version_p < 16) or (python_version == '3.11' and version_p < 18)"
-
-
-
