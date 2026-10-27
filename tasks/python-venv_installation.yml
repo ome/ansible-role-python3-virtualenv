@@ -71,7 +71,7 @@
     dest: "{{ virtualenv_basedir }}/{{ env_name }}"
     state: link
 
-## check of the installed python version
+## check  the installed python version
 - name: check the installed python version
   command: "{{ virtualenv_basedir }}/{{ env_name }}/bin/python{{ python_version }} --version"
   changed_when: false
@@ -82,7 +82,7 @@
 
 # patch for the pip issue
 
-- name: update the pip version if the it python version less than 3.11.18  or python 3.12.16
+- name: update the pip version if python version less than 3.11.18 or python 3.12.16
   command: "{{ virtualenv_basedir }}/{{ env_name }}/bin/python{{ python_version }} -m pip install 'pip @ https://files.pythonhosted.org/packages/3f/06/3e4420302363fbb71be3c7f35ce042f54bfca330e3e66b3a2e3c4cca579f/pip-26.2.2-py3-none-any.whl#sha256=fd7f4dfa8190e014013b9f08f3e973f4e4c26ffd179a204895533a7254813a70'"
   changed_when: false
   when: "(python_version == '3.12' and version_p < 16) or (python_version == '3.11' and version_p < 18)"
