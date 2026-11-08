@@ -16,7 +16,7 @@
   become: true
   ansible.builtin.dnf:
     name:
-      - "python{{ python_version }}-devel.aarch64"
+      - "python{{ python_version }}-devel"
       - "python{{ python_version }}"
       - "python{{ python_version }}-pip"
       - "python{{ python_version }}-setuptools"
