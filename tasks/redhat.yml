@@ -1,18 +1,5 @@
 ---
-
-- name: python venv | install packages (x86_64)
-  become: true
-  ansible.builtin.dnf:    
-    name:
-      - "python{{ python_version }}-devel.x86_64"
-      - "python{{ python_version }}"
-      - "python{{ python_version }}-pip"
-      - "python{{ python_version }}-setuptools"
-    state: present
-  when: ansible_facts.get('architecture') is search("x86_64")
-
-
-- name: python venv | install packages (aarch64)
+- name: python venv | install packages
   become: true
   ansible.builtin.dnf:
     name:
@@ -21,4 +8,3 @@
       - "python{{ python_version }}-pip"
       - "python{{ python_version }}-setuptools"
     state: present
-  when: ansible_facts.get('architecture') is search("aarch64")
