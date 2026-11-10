@@ -1,5 +1,15 @@
 ---
 
+
+- name: python venv | install epel-release
+  become: true
+  ansible.builtin.dnf:
+    name:
+      epel-release
+    update_cache: true
+    state: present
+
+
 - name: python venv | install packages
   become: true
   ansible.builtin.dnf:    
