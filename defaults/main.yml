@@ -5,4 +5,4 @@ virtualenv_basedir: "/opt"
 # The virtual environment name
 env_name: venv3
 # list of supported versions
-supported_versions: ["3.11", "3.12", "3.14", "3.14"]
+supported_versions: ["3.11", "3.12", "3.13", "3.14"]

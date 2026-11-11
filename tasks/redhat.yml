@@ -17,7 +17,7 @@
       - "python{{ python_version }}-devel.x86_64"
       - "python{{ python_version }}"
       - "python{{ python_version }}-pip"
-      - "python{{ python_version }}-setuptools"
+      ##- "python{{ python_version }}-setuptools"
     state: present
 
 

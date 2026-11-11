@@ -1,0 +1,35 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+lint: |
+    yamllint .
+    ansible-lint
+    flake8
+platforms:
+  - name: rockylinux-9
+    image: rockylinux:9
+    groups:
+      - py3
+  - name: ubuntu-2204
+    image: ubuntu:22.04
+    groups:
+      - py3
+
+provisioner:
+  name: ansible
+  playbooks:
+    converge: ../resources/playbook.yml
+  lint:
+    name: ansible-lint
+  inventory:
+    group_vars:
+      py3:
+        ansible_python_interpreter:  /usr/bin/python3
+
+scenario:
+  name: python312
+verifier:
+  name: testinfra
+

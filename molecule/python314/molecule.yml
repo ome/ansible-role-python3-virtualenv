@@ -8,11 +8,11 @@ lint: |
     ansible-lint
     flake8
 platforms:
-  - name: rockylinux-9
+  - name: rockylinux-9-python314
     image: rockylinux:9
     groups:
       - py3
-  - name: ubuntu-2204
+  - name: ubuntu-2204-python314
     image: ubuntu:22.04
     groups:
       - py3
@@ -27,9 +27,10 @@ provisioner:
     group_vars:
       py3:
         ansible_python_interpreter:  /usr/bin/python3
+        python_version: "3.14"
 
 scenario:
-  name: default
+  name: python314
 verifier:
   name: testinfra
-  directory: ../resources/tests/
+
