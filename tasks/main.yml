@@ -14,6 +14,13 @@
     - python_version in supported_versions
     - ansible_os_family | lower == 'debian'
 
+- name: Install setuptools for Python
+  ansible.builtin.pip:
+    name:
+      - packaging
+      - setuptools
+    executable: "pip{{ python_version }}"
+
 - ansible.builtin.include_tasks: python-venv_installation.yml
   when: python_version in supported_versions
 

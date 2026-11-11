@@ -24,16 +24,15 @@
     name:
       - "python{{ python_version }}"
       - "python{{ python_version }}-venv"
+      - wget
     state: present
 
-- name: Install pip for Python  using ensurepip
-  ansible.builtin.command: "python{{ python_version }} -m ensurepip --upgrade"
-  args:
-    creates: "/usr/local/bin/pip{{ python_version }}"
+- name: get get-pip
+  ansible.builtin.shell: "wget https://bootstrap.pypa.io/get-pip.py"
+  changed_when: false
 
-- name: Install setuptools for Python
-  ansible.builtin.pip:
-    name:
-      - setuptools
-      - packaging
-    executable: "pip{{ python_version }}"
+- name: Install pip for Python  using get-pip
+  ansible.builtin.shell:  "python{{ python_version }} get-pip.py"
+  changed_when: false
+
+
